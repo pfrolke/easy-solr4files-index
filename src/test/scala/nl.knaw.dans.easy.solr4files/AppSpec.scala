@@ -63,7 +63,7 @@ class AppSpec extends TestSupportFixture {
   }
 
   private def nrOfImageStreams(solrRequest: SolrRequest[_ <: SolrResponse]) = {
-    if (solrRequest.getContentWriter(String).toString.isEmpty)
+    if (solrRequest.getContentWriter("").toString.isEmpty)
       0
     else {
       val solrDocId = solrRequest
