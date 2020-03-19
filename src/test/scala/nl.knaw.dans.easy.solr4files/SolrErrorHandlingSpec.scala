@@ -16,7 +16,7 @@
 package nl.knaw.dans.easy.solr4files
 
 import org.apache.http.HttpStatus._
-import org.apache.solr.client.solrj.impl.{ BaseHttpSolrClient, HttpSolrClient }
+import org.apache.solr.client.solrj.impl.BaseHttpSolrClient
 import org.apache.solr.client.solrj.response.{ QueryResponse, UpdateResponse }
 import org.apache.solr.client.solrj.{ SolrClient, SolrRequest, SolrResponse }
 import org.apache.solr.common.SolrInputDocument
@@ -68,8 +68,8 @@ class SolrErrorHandlingSpec extends TestSupportFixture
 
   "delete" should "return the exception bubbling up from solrClient.deleteByQuery" in {
     delete("/fileindex/?q=:") {
-      body shouldBe "Error from server at mockedHost: mocked parser"
-      status shouldBe SC_BAD_REQUEST
+      body shouldBe "solr delete [:] failed with Error from server at mockedHost: mocked parser"
+      status shouldBe SC_INTERNAL_SERVER_ERROR
     }
   }
 
@@ -95,8 +95,8 @@ class SolrErrorHandlingSpec extends TestSupportFixture
 
   "search" should "return the exception bubbling up from solrClient.query" in {
     get(s"/filesearch?text=:") {
-      body shouldBe "Error from server at mockedHost: mocked parser"
-      status shouldBe SC_BAD_REQUEST
+      body shouldBe ""
+      status shouldBe SC_INTERNAL_SERVER_ERROR
     }
   }
 }
