@@ -68,8 +68,8 @@ class SolrErrorHandlingSpec extends TestSupportFixture
 
   "delete" should "return the exception bubbling up from solrClient.deleteByQuery" in {
     delete("/fileindex/?q=:") {
-      body shouldBe "solr delete [:] failed with Error from server at mockedHost: mocked parser"
-      status shouldBe SC_INTERNAL_SERVER_ERROR
+      body shouldBe "Error from server at mockedHost: mocked parser"
+      status shouldBe SC_BAD_REQUEST
     }
   }
 
@@ -95,8 +95,8 @@ class SolrErrorHandlingSpec extends TestSupportFixture
 
   "search" should "return the exception bubbling up from solrClient.query" in {
     get(s"/filesearch?text=:") {
-      body shouldBe ""
-      status shouldBe SC_INTERNAL_SERVER_ERROR
+      body shouldBe "Error from server at mockedHost: mocked parser"
+      status shouldBe SC_BAD_REQUEST
     }
   }
 }
